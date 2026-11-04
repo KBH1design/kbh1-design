@@ -75,8 +75,9 @@
   .about__lead { max-inline-size: var(--measure-intro); }
 
   @media (min-width: 48em) {
+    /* lead cap and portrait top share the content line */
     .about__body {
-      display: grid; align-items: end;
+      display: grid; align-items: start;
       grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
       column-gap: var(--space-gutter);
     }
@@ -84,7 +85,7 @@
     .about__portrait { grid-column: 6 / -1; grid-row: 1; width: 100%; margin: 0; }
   }
   @media (min-width: 90em) {
-    .about__body { grid-row: 3; grid-template-columns: subgrid; }
+    .about__body { grid-row: 2; grid-template-columns: subgrid; }
     .about__lead     { grid-column: 1 / 8; }
     .about__portrait { grid-column: 10 / -1; }
   }
@@ -95,7 +96,7 @@
     .services__list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--space-gutter); row-gap: var(--space-stack-loose); }
   }
   @media (min-width: 90em) {
-    .services__list { grid-row: 3; align-self: end; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .services__list { grid-row: 2; align-self: start; grid-template-columns: repeat(4, minmax(0, 1fr)); }
   }
 
   /* =============================== BRANDS =============================== */
