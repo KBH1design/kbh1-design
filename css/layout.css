@@ -37,6 +37,11 @@
     }
     .section > * { grid-column: 1 / -1; }
     .section__head { grid-row: 1; }
+
+    /* Hanging section: no 16:9 screen. Content hangs from the content line
+       (heading cap + --space-head-min) — the same line the project blurbs
+       hang from — and the section ends one --space-section below it. */
+    .section--hang { aspect-ratio: auto; grid-template-rows: auto auto; }
   }
 
   /* ---- Figure: a local artboard -----------------------------------------

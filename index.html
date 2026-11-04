@@ -49,7 +49,7 @@
     </section>
 
     <!-- ================================================================ ABOUT -->
-    <section class="section about" data-surface="paper" aria-labelledby="about-title">
+    <section class="section section--hang about" data-surface="paper" aria-labelledby="about-title">
       <h2 class="section__head t-heading" id="about-title">Structure and intuition,<br> in the same room</h2>
       <div class="about__body">
         <img class="about__portrait" src="assets/img/portrait-james-cross.png" width="580" height="580" alt="James Cross, halftone portrait">
@@ -58,7 +58,7 @@
     </section>
 
     <!-- ================================================================ SERVICES -->
-    <section class="section services" id="services" data-surface="paper" aria-labelledby="services-title">
+    <section class="section section--hang services" id="services" data-surface="paper" aria-labelledby="services-title">
       <h2 class="section__head t-heading" id="services-title">Four ways to work together</h2>
       <ul class="services__list" role="list">
         <li class="card">
@@ -93,18 +93,20 @@
     </section>
 
     <!-- ================================================================ BRANDS -->
-    <section class="section brands" data-surface="paper" aria-labelledby="brands-title">
+    <section class="section section--hang brands" data-surface="paper" aria-labelledby="brands-title">
       <h2 class="section__head t-heading" id="brands-title">Some of the brands I’ve worked with</h2>
       <div class="brands__logos" role="img" aria-label="Client logos: NVIDIA, Arla, Castello, ReSound, Lurpak, adidas, Microsoft, Intel, VMware, AMD, Dell Technologies, NIVEA MEN, Nordea, Amazon, Citroën, ILM, Jabra">
-        <img class="brands__all" src="assets/img/logos-all.png" width="1360" height="533" alt="">
+        <div class="brands__scroller">
+          <img class="brands__all" src="assets/img/logos-all.png" width="1360" height="533" alt="">
+        </div>
         <div class="brands__rows figure" aria-hidden="true">
           <img class="art" style="--x:0;    --y:0;   --w:1604.5" src="assets/img/logos-r1a.jpg" alt="">
           <img class="art" style="--x:1420; --y:0;   --w:284.5"  src="assets/img/logos-r1b.jpg" alt="">
-          <img class="art" style="--x:92;   --y:230; --w:1612.5" src="assets/img/logos-r2.jpg"  alt="">
-          <img class="art" style="--x:884;  --y:460; --w:520"    src="assets/img/logos-r3c.jpg" alt="">
-          <img class="art" style="--x:542;  --y:460; --w:330"    src="assets/img/logos-r3b.jpg" alt="">
-          <img class="art" style="--x:1395; --y:460; --w:310"    src="assets/img/logos-r3d.jpg" alt="">
-          <img class="art" style="--x:0;    --y:460; --w:557.5"  src="assets/img/logos-r3a.jpg" alt="">
+          <img class="art" style="--x:92;   --y:150; --w:1612.5" src="assets/img/logos-r2.jpg"  alt="">
+          <img class="art" style="--x:884;  --y:317; --w:520"    src="assets/img/logos-r3c.jpg" alt="">
+          <img class="art" style="--x:542;  --y:317; --w:330"    src="assets/img/logos-r3b.jpg" alt="">
+          <img class="art" style="--x:1395; --y:317; --w:310"    src="assets/img/logos-r3d.jpg" alt="">
+          <img class="art" style="--x:0;    --y:317; --w:557.5"  src="assets/img/logos-r3a.jpg" alt="">
         </div>
       </div>
     </section>
@@ -245,6 +247,37 @@
     /* Close the mobile menu when a destination is chosen */
     document.querySelectorAll('.site-nav a').forEach(a =>
       a.addEventListener('click', () => document.getElementById('site-nav').hidePopover()));
+
+    /* Mobile client logos: pan right-to-left with page scroll, so every logo
+       passes through view. Left edge as the section enters the bottom of the
+       screen, centred mid-screen (as drawn), right edge as it leaves the top.
+       The first touch, drag or wheel hands control to the visitor; with
+       reduced motion it is simply a swipeable strip. */
+    (() => {
+      const strip = document.querySelector('.brands__scroller');
+      const section = document.querySelector('.brands');
+      if (!strip || !section) return;
+      const mobile = matchMedia('(max-width: 47.99em)');
+      const still = matchMedia('(prefers-reduced-motion: reduce)');
+      let handedOver = false;
+
+      const pan = () => {
+        if (handedOver || !mobile.matches || still.matches) return;
+        const range = strip.scrollWidth - strip.clientWidth;
+        if (range <= 0) return;
+        const r = section.getBoundingClientRect();
+        const p = Math.min(1, Math.max(0, (innerHeight - r.top) / (innerHeight + r.height)));
+        strip.scrollLeft = p * range;
+      };
+      const handOver = () => { handedOver = true; };
+
+      ['pointerdown', 'touchstart', 'wheel', 'keydown'].forEach(t =>
+        strip.addEventListener(t, handOver, { passive: true }));
+      addEventListener('scroll', pan, { passive: true }); // fires once per frame
+      addEventListener('resize', pan);
+      strip.querySelector('img').addEventListener('load', pan);
+      pan();
+    })();
   </script>
 </body>
 </html>
