@@ -1,0 +1,95 @@
+/* ==========================================================================
+   KBH1 DESIGN — Primitive tokens  (PRIVATE)
+   --------------------------------------------------------------------------
+   Raw values only. Every custom property here is prefixed `--_` = private:
+   components must never read these directly. They are consumed exclusively
+   by the semantic layer (semantic.css).
+
+   Sources
+   · Colour   — sampled from the InDesign HTML5 exports + design-guide PDFs
+   · Type     — idGeneratedStyles.css (sizes ÷ 20, the export's scale factor)
+   · Space    — the cyan spacing markers in /Input/Design Guides
+   · Metrics  — measured in-browser from the Adobe Fonts kit (ioc6bqt)
+   ========================================================================== */
+
+@layer tokens {
+  :root {
+    /* ---- Colour --------------------------------------------------------- */
+    --_color-white:      #ffffff;
+    --_color-grey-50:    #f2f2f2; /* light type on ink · light panel · button rule */
+    --_color-grey-100:   #e1e1e1; /* stencil display type over texture */
+    --_color-grey-950:   #111111; /* ink: type on light · dark surfaces */
+    --_color-steel-400:  #8c99a3; /* hero grain tint (image colour, for fallbacks) */
+    --_color-cool-100:   #e3e7ea; /* Dell paper texture base (image fallback) */
+    --_color-cyan-200:   #abffff; /* spacing-marker colour in the guides (tooling) */
+
+    /* ---- Typefaces (Adobe Fonts kit ioc6bqt) ---------------------------- */
+    --_font-grotesk: "helvetica-neue-lt-pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --_font-stencil: "octin-spraypaint", "Arial Narrow", Impact, sans-serif;
+
+    --_weight-roman:  400; /* Helvetica Neue LT Pro 55 Roman  */
+    --_weight-medium: 500; /* Helvetica Neue LT Pro 65 Medium */
+    --_weight-bold:   700; /* Helvetica Neue LT Pro 75 Bold   */
+
+    /* Font metrics, em-units (used for the cap/baseline trim fallback) */
+    --_metric-grotesk-ascent:  0.973;
+    --_metric-grotesk-descent: 0.253;
+    --_metric-grotesk-cap:     0.714;
+    --_metric-stencil-ascent:  0.920;
+    --_metric-stencil-descent: 0.198;
+    --_metric-stencil-cap:     0.679;
+
+    /* ---- Type size ramp — desktop master (1920 artboard) ---------------- */
+    --_size-14: 0.875rem; /* 14px */
+    --_size-18: 1.125rem; /* 18px */
+    --_size-24: 1.5rem;   /* 24px */
+    --_size-60: 3.75rem;  /* 60px */
+
+    /* Stencil display is set to the artboard, not the ramp */
+    --_size-stencil-desktop: calc(174 / 1920 * 100vw); /* 174px @ 1920 */
+    --_size-stencil-mobile:  calc(100 / 390 * 100vw);  /* 100px @ 390  */
+
+    /* Mobile master (390 artboard) = desktop × 8/9 — exact for every style
+       in the InDesign mobile file (16/18 · 21.33/24 · 53.33/60 · 12.44/14). */
+    --_ratio-mobile: calc(8 / 9);
+
+    /* ---- Leading ---------------------------------------------------------- */
+    --_leading-solid: 1;        /* 24/24 headings, display, labels */
+    --_leading-lead:  1.25;     /* 24/30 lead copy                 */
+    --_leading-text:  calc(4 / 3); /* 18/24 body                    */
+    --_leading-list:  2rem;     /* 32px pitch, stacked footer list (mobile) */
+
+    /* ---- Tracking (InDesign 1/1000 em → CSS em) --------------------------
+       Calibrated by least-squares fit of the browser's word positions to
+       InDesign's exported word positions across all 76 multi-word lines:
+       24px and up −8 · 18px +8 · 14px caps +64 (spread < 0.0001em). */
+    --_tracking-minus-8: -0.008em; /* display sizes (24, 60)  */
+    --_tracking-plus-8:   0.008em; /* text sizes (18)         */
+    --_tracking-plus-64:  0.064em; /* uppercase labels (14)   */
+
+    /* ---- Space — values as written on the guide markers ------------------- */
+    --_space-0:   0px;
+    --_space-20:  20px;
+    --_space-27:  27px;
+    --_space-30:  30px;
+    --_space-40:  40px;
+    --_space-45:  45px;
+    --_space-80:  80px;
+    --_space-90:  90px;
+    --_space-105: 105px; /* desktop "content line": heading cap → content cap */
+
+    /* ---- Sizes ------------------------------------------------------------ */
+    --_size-hairline:   1px;
+    --_size-control-49: 49px; /* 55 × 8/9 */
+    --_size-control-55: 55px;
+    --_size-icon-16:    16px;
+    --_size-header-96:  96px;  /* 40 + cap + 40 */
+    --_size-header-108: 108px; /* 45 + cap + 45 */
+    --_size-icon-rule:  1.71px;
+
+    /* ---- Grid ------------------------------------------------------------- */
+    --_columns-4:  4;
+    --_columns-8:  8;
+    --_columns-12: 12;
+  }
+}

@@ -1,0 +1,135 @@
+/* ==========================================================================
+   KBH1 DESIGN — Base: reset, typographic roles, cap-height trim
+   ========================================================================== */
+
+@layer reset {
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+  body, h1, h2, h3, h4, p, figure, blockquote, ul, ol, dl, dd { margin: 0; }
+  ul[role="list"], ol[role="list"] { list-style: none; padding: 0; }
+  img, picture, svg { display: block; max-width: 100%; }
+  img { height: auto; }
+  button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+  a { color: inherit; }
+}
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+  body {
+    background: var(--color-surface-paper);
+    color: var(--color-fg);
+    font-family: var(--font-text);
+    font-size: var(--text-body-size);
+    line-height: var(--text-body-leading);
+    font-kerning: normal;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: clip;
+  }
+
+  :focus-visible { outline: var(--control-rule) solid currentColor; outline-offset: 4px; }
+
+  .visually-hidden {
+    position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Typographic roles. Each role trims its box to cap-height (top) and the
+   alphabetic baseline (bottom) — the edges the design guides measure from —
+   so every spacing token reads 1:1 against the cyan markers.
+   -------------------------------------------------------------------------- */
+@layer base {
+  .t-heading, .t-tagline, .t-lead, .t-title, .t-display,
+  .t-body, .t-action, .t-label, .t-stencil {
+    --_asc: var(--metric-text-ascent);
+    --_desc: var(--metric-text-descent);
+    --_cap: var(--metric-text-cap);
+    text-box: trim-both cap alphabetic;
+  }
+
+  .t-heading {
+    font-weight: var(--text-heading-weight);
+    font-size: var(--text-heading-size);
+    line-height: var(--text-heading-leading);
+    letter-spacing: var(--text-heading-tracking);
+    text-transform: uppercase;
+    max-inline-size: var(--measure-heading);
+  }
+  .t-tagline {
+    font-weight: var(--text-tagline-weight);
+    font-size: var(--text-tagline-size);
+    line-height: var(--text-tagline-leading);
+    letter-spacing: var(--text-tagline-tracking);
+    text-transform: uppercase;
+  }
+  .t-lead {
+    font-weight: var(--text-lead-weight);
+    font-size: var(--text-lead-size);
+    line-height: var(--text-lead-leading);
+    letter-spacing: var(--text-lead-tracking);
+    text-wrap: pretty;
+  }
+  .t-title {
+    font-weight: var(--text-title-weight);
+    font-size: var(--text-title-size);
+    line-height: var(--text-title-leading);
+    letter-spacing: var(--text-title-tracking);
+  }
+  .t-display {
+    font-weight: var(--text-display-weight);
+    font-size: var(--text-display-size);
+    line-height: var(--text-display-leading);
+    letter-spacing: var(--text-display-tracking);
+    text-transform: uppercase;
+  }
+  .t-body {
+    font-weight: var(--text-body-weight);
+    font-size: var(--text-body-size);
+    line-height: var(--text-body-leading);
+    letter-spacing: var(--text-body-tracking);
+    text-wrap: pretty;
+  }
+  .t-body strong, .t-body b { font-weight: var(--text-body-weight-strong); }
+  .t-action {
+    font-weight: var(--text-action-weight);
+    font-size: var(--text-action-size);
+    line-height: var(--text-action-leading);
+    letter-spacing: var(--text-action-tracking);
+  }
+  .t-label {
+    font-weight: var(--text-label-weight);
+    font-size: var(--text-label-size);
+    line-height: var(--text-label-leading);
+    letter-spacing: var(--text-label-tracking);
+    text-transform: uppercase;
+  }
+  .t-stencil {
+    --_asc: var(--metric-display-ascent);
+    --_desc: var(--metric-display-descent);
+    --_cap: var(--metric-display-cap);
+    font-family: var(--font-display);
+    font-weight: var(--text-stencil-weight);
+    font-size: var(--text-stencil-size);
+    line-height: var(--text-stencil-leading);
+    letter-spacing: var(--text-stencil-tracking);
+    color: var(--color-display-on-texture);
+  }
+
+  /* Fallback where `text-box` is unsupported: trim with negative margins
+     computed from the measured font metrics. Layout spacing is always done
+     with gap/padding, never margins on text, so nothing collides. */
+  @supports not (text-box: trim-both cap alphabetic) {
+    .t-heading, .t-tagline, .t-lead, .t-title, .t-display,
+    .t-body, .t-action, .t-label, .t-stencil {
+      --_half-leading: calc((1lh - (var(--_asc) + var(--_desc)) * 1em) / 2);
+      margin-block-start: calc(-1 * (var(--_half-leading) + (var(--_asc) - var(--_cap)) * 1em));
+      margin-block-end:   calc(-1 * (var(--_half-leading) + var(--_desc) * 1em));
+    }
+  }
+}

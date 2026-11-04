@@ -1,0 +1,12 @@
+/* ==========================================================================
+   KBH1 DESIGN — entry stylesheet
+   Layer order: reset → tokens → base → layout → components → compositions
+   ========================================================================== */
+@layer reset, tokens, base, layout, components, compositions;
+
+@import url("tokens/primitives.css");
+@import url("tokens/semantic.css");
+@import url("base.css");
+@import url("layout.css");
+@import url("components.css");
+@import url("compositions.css");

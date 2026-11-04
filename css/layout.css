@@ -1,0 +1,80 @@
+/* ==========================================================================
+   KBH1 DESIGN — Layout primitives
+   ========================================================================== */
+
+@layer layout {
+  /* ---- Section ---------------------------------------------------------
+     Padding is measured to cap-height (top) and baseline (bottom) because
+     all type is trimmed. Mobile/tablet: a flowing column. Desktop: one
+     16:9 "screen" per section on a 12-column grid, as in the 1920 master. */
+  .section {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-section) var(--space-page);
+    background: var(--color-bg);
+    color: var(--color-fg);
+  }
+  .section > * { position: relative; z-index: 1; }
+
+  /* Heading block: the next element starts at
+     max(heading + head-gap, head-min) below the heading's cap line. */
+  .section__head {
+    min-block-size: var(--space-head-min);
+    padding-block-end: var(--space-head-gap);
+  }
+  @supports not (text-box: trim-both cap alphabetic) {
+    .section__head { min-block-size: calc(var(--space-head-min) + 1lh - 1cap); }
+  }
+
+  @media (min-width: 90em) {
+    .section {
+      aspect-ratio: var(--frame-screen);
+      display: grid;
+      grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+      grid-template-rows: auto auto 1fr;
+      column-gap: var(--space-gutter);
+    }
+    .section > * { grid-column: 1 / -1; }
+    .section__head { grid-row: 1; }
+  }
+
+  /* ---- Figure: a local artboard -----------------------------------------
+     Children (.art) are placed with coordinates read straight off the
+     design guide (--x, --y, --w in artboard px), resolved as percentages
+     of the figure — so compositions scale without drifting. */
+  .figure { position: relative; aspect-ratio: var(--fw) / var(--fh); }
+  .figure > .art {
+    position: absolute;
+    left:  calc(var(--x) / var(--fw) * 100%);
+    top:   calc(var(--y) / var(--fh) * 100%);
+    width: calc(var(--w) / var(--fw) * 100%);
+  }
+  .art > img, picture.art img { width: 100%; }
+
+  /* ---- Bleeds ------------------------------------------------------------ */
+  .bleed-inline { margin-inline: calc(-1 * var(--space-page)); max-inline-size: none; }
+  .bleed-end    { margin-block-end: calc(-1 * var(--space-section)); }
+
+  /* ---- Breakpoint visibility -------------------------------------------- */
+  @media (min-width: 48em) { .only-mobile { display: none !important; } }
+  @media (max-width: 47.99em) { .from-tablet { display: none !important; } }
+  @media (max-width: 89.99em) { .only-desktop { display: none !important; } }
+  @media (min-width: 90em) { .below-desktop { display: none !important; } }
+
+  /* ---- Spec overlay (press “g”, or add ?spec to the URL) ---------------- */
+  [data-spec] body::after {
+    --_col: calc((100% - (var(--grid-columns) - 1) * var(--space-gutter)) / var(--grid-columns));
+    content: "";
+    position: fixed;
+    inset: 0 var(--space-page);
+    z-index: 1000;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      to right,
+      color-mix(in srgb, var(--color-spec-marker) 40%, transparent) 0 var(--_col),
+      transparent var(--_col) calc(var(--_col) + var(--space-gutter))
+    );
+    mix-blend-mode: multiply;
+  }
+}

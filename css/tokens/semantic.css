@@ -1,0 +1,194 @@
+/* ==========================================================================
+   KBH1 DESIGN — Semantic tokens  (PUBLIC)
+   --------------------------------------------------------------------------
+   The only tokens components may use. Each one names a role and resolves
+   to a primitive. Breakpoints re-point roles, never invent new raw values.
+
+   Breakpoints (custom properties can't be used inside @media, so they are
+   documented here and used literally):
+     mobile   0 – 47.99em    master artboard 390   (default, mobile first)
+     tablet   48em – 89.99em derived: desktop type + space, fluid layout
+     desktop  ≥ 90em (1440)  master artboard 1920
+   ========================================================================== */
+
+@layer tokens {
+  :root {
+    /* ======================= COLOUR ====================================== */
+    --color-surface-ink:    var(--_color-grey-950);
+    --color-surface-paper:  var(--_color-white);
+    --color-surface-mist:   var(--_color-grey-50);
+    --color-surface-cool:   var(--_color-cool-100);
+
+    --color-text-on-ink:    var(--_color-grey-50);
+    --color-text-on-paper:  var(--_color-grey-950);
+    --color-display-on-texture: var(--_color-grey-100);
+    --color-accent-steel:   var(--_color-steel-400);
+    --color-spec-marker:    var(--_color-cyan-200);
+
+    /* Contextual pair — re-pointed by [data-surface] below */
+    --color-bg: var(--color-surface-paper);
+    --color-fg: var(--color-text-on-paper);
+    --color-rule: currentColor; /* rules follow the text colour of their surface */
+
+    /* ======================= TYPOGRAPHY ================================== */
+    --type-scale: var(--_ratio-mobile);
+
+    --font-text:    var(--_font-grotesk);
+    --font-display: var(--_font-stencil);
+
+    /* Font metrics, for the cap/baseline trim fallback */
+    --metric-text-ascent:     var(--_metric-grotesk-ascent);
+    --metric-text-descent:    var(--_metric-grotesk-descent);
+    --metric-text-cap:        var(--_metric-grotesk-cap);
+    --metric-display-ascent:  var(--_metric-stencil-ascent);
+    --metric-display-descent: var(--_metric-stencil-descent);
+    --metric-display-cap:     var(--_metric-stencil-cap);
+
+    /* heading — section titles, wordmark (75 Bold, caps, solid) */
+    --text-heading-weight:   var(--_weight-bold);
+    --text-heading-size:     calc(var(--_size-24) * var(--type-scale));
+    --text-heading-leading:  var(--_leading-solid);
+    --text-heading-tracking: var(--_tracking-minus-8);
+
+    /* tagline — header strapline (55 Roman, caps) */
+    --text-tagline-weight:   var(--_weight-roman);
+    --text-tagline-size:     var(--text-heading-size);
+    --text-tagline-leading:  var(--_leading-solid);
+    --text-tagline-tracking: var(--_tracking-minus-8);
+
+    /* lead — introductions (65 Medium, 24/30) */
+    --text-lead-weight:   var(--_weight-medium);
+    --text-lead-size:     calc(var(--_size-24) * var(--type-scale));
+    --text-lead-leading:  var(--_leading-lead);
+    --text-lead-tracking: var(--_tracking-minus-8);
+
+    /* title — service names (65 Medium, 24 solid) */
+    --text-title-weight:   var(--_weight-medium);
+    --text-title-size:     calc(var(--_size-24) * var(--type-scale));
+    --text-title-leading:  var(--_leading-solid);
+    --text-title-tracking: var(--_tracking-minus-8);
+
+    /* display — LOOK / SHAPE / BUILD (65 Medium, 60, caps) */
+    --text-display-weight:   var(--_weight-medium);
+    --text-display-size:     calc(var(--_size-60) * var(--type-scale));
+    --text-display-leading:  var(--_leading-solid);
+    --text-display-tracking: var(--_tracking-minus-8);
+
+    /* body — running text (55 Roman 18/24; lead-ins in 75 Bold) */
+    --text-body-weight:        var(--_weight-roman);
+    --text-body-weight-strong: var(--_weight-bold);
+    --text-body-size:          calc(var(--_size-18) * var(--type-scale));
+    --text-body-leading:       var(--_leading-text);
+    --text-body-tracking:      var(--_tracking-plus-8);
+
+    /* action — button labels (65 Medium 18) */
+    --text-action-weight:   var(--_weight-medium);
+    --text-action-size:     calc(var(--_size-18) * var(--type-scale));
+    --text-action-leading:  var(--_leading-solid);
+    --text-action-tracking: var(--_tracking-plus-8);
+
+    /* label — prices, footer meta (65 Medium 14, caps, +50) */
+    --text-label-weight:   var(--_weight-medium);
+    --text-label-size:     calc(var(--_size-14) * var(--type-scale));
+    --text-label-leading:  var(--_leading-solid);
+    --text-label-tracking: var(--_tracking-plus-64);
+    --text-label-pitch-stacked: var(--_leading-list); /* 32px line pitch, stacked list on mobile */
+
+    /* stencil — WORK THAT HAD TO MAKE SENSE (Octin Spraypaint) */
+    --text-stencil-weight:   var(--_weight-roman);
+    --text-stencil-size:     var(--_size-stencil-mobile);
+    --text-stencil-leading:  var(--_leading-solid);
+    --text-stencil-tracking: var(--_tracking-minus-8);
+
+    /* Measures (line lengths) — expressed in em so the rag survives scaling */
+    --measure-hero:      none;
+    --measure-intro:     none;
+    --measure-blurb:     none;
+    --measure-card:      none;
+    --measure-heading:   15.5em; /* 330px @ mobile master */
+
+    /* ======================= SPACE ======================================= */
+    --space-page:          var(--_space-20); /* outer margin            */
+    --space-gutter:        var(--_space-20); /* column gap              */
+    --space-section:       var(--_space-40); /* section top → cap, baseline → section bottom */
+    --space-stack-tight:   var(--_space-27); /* label → title, display → text */
+    --space-stack:         var(--_space-40); /* title → body, text → actions, step → step */
+    --space-stack-loose:   var(--_space-80); /* heading → content, card → card */
+    --space-inline-action: var(--_space-40); /* between buttons / links  */
+    --space-inline-meta:   var(--_space-0);  /* footer items (stacked on mobile) */
+
+    /* Section heading block: content starts at max(head + gap, head-min) */
+    --space-head-gap: var(--space-stack-loose);
+    --space-head-min: var(--_space-0);
+
+    /* ======================= COMPONENT SIZES ============================= */
+    --control-height:        var(--_size-control-49);
+    --control-padding-inline: var(--_space-0);
+    --control-rule:          var(--_size-hairline);
+    --icon-size:             var(--_size-icon-16);
+    --icon-rule:             var(--_size-icon-rule);
+    --header-height:         var(--_size-header-96);
+
+    /* ======================= LAYOUT ====================================== */
+    --grid-columns: var(--_columns-4);
+
+    /* Section proportions (aspect of the master artboard frames) */
+    --frame-hero:    390 / 770;
+    --frame-stencil: 390 / 960;
+    --frame-contact: 390 / 960;
+    --frame-footer:  390 / 480;
+  }
+
+  /* ---------------------------- TABLET ----------------------------------- */
+  @media (min-width: 48em) {
+    :root {
+      --type-scale: 1;
+      --text-stencil-size: var(--_size-stencil-desktop);
+      --text-label-pitch-stacked: var(--text-label-size);
+
+      --measure-hero:    37.5em; /* 900px  ÷ 24 */
+      --measure-intro:   34.9em; /* 837.5px ÷ 24 */
+      --measure-blurb:   24.2em; /* wider on tablet: text sits above its image */
+      --measure-card:    none;
+      --measure-heading: none;
+
+      --space-page:          var(--_space-45);
+      --space-gutter:        var(--_space-30);
+      --space-section:       var(--_space-45);
+      --space-stack-tight:   var(--_space-30);
+      --space-stack:         var(--_space-45);
+      --space-stack-loose:   var(--_space-90);
+      --space-inline-action: var(--_space-45);
+      --space-inline-meta:   var(--_space-40);
+      --space-head-gap:      var(--_space-45);
+      --space-head-min:      var(--_space-105);
+
+      --control-height:         var(--_size-control-55);
+      --control-padding-inline: var(--_space-45);
+      --header-height:          var(--_size-header-108);
+
+      --grid-columns: var(--_columns-8);
+
+      --frame-hero:    auto; /* tablet: sized by the art + content, see compositions */
+      --frame-stencil: 1920 / 1080;
+      --frame-contact: 1920 / 1080;
+      --frame-footer:  1920 / 540;
+    }
+  }
+
+  /* ---------------------------- DESKTOP ---------------------------------- */
+  @media (min-width: 90em) {
+    :root {
+      --measure-blurb: 16.4em; /* 295px ÷ 18 */
+      --grid-columns: var(--_columns-12);
+      --frame-hero: 1920 / 972;
+      --frame-screen: 1920 / 1080; /* every desktop section is one 16:9 screen */
+    }
+  }
+
+  /* ---------------------------- SURFACES --------------------------------- */
+  [data-surface="ink"]   { --color-bg: var(--color-surface-ink);   --color-fg: var(--color-text-on-ink); }
+  [data-surface="paper"] { --color-bg: var(--color-surface-paper); --color-fg: var(--color-text-on-paper); }
+  [data-surface="mist"]  { --color-bg: var(--color-surface-mist);  --color-fg: var(--color-text-on-paper); }
+  [data-surface="cool"]  { --color-bg: var(--color-surface-cool);  --color-fg: var(--color-text-on-paper); }
+}
