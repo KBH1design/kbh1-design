@@ -129,6 +129,12 @@
     --icon-rule:             var(--_size-icon-rule);
     --header-height:         var(--_size-header-96);
 
+    /* Divider — the brand-black hairline between sibling items,
+       the same 1px stroke as the button rule */
+    --divider-width:         var(--_size-hairline);
+    --divider-color:         var(--color-rule);  /* ink on light surfaces */
+    --space-divider:         var(--_space-27);   /* clear space each side of the rule */
+
     /* ======================= LAYOUT ====================================== */
     --grid-columns: var(--_columns-4);
 

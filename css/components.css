@@ -19,6 +19,7 @@
     justify-content: space-between;
     gap: var(--space-gutter);
     block-size: var(--header-height);  /* cap centred: 40·cap·40 / 45·cap·45 */
+    position: relative; z-index: 2;    /* always above the hero art */
     padding-inline: var(--space-page);
     background: var(--color-bg);
     color: var(--color-fg);

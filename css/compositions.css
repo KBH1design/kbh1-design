@@ -45,7 +45,9 @@
      baseline — true of the 390 master, and kept true at any phone width.
      The grain's first row sits at 34.86% of the art's height. */
   @media (max-width: 47.99em) {
-    .hero { display: grid; grid-template-rows: auto auto; aspect-ratio: auto; }
+    /* clip: on phones wider than 390 the art's pull-up exceeds the lead's
+       height, and must never paint over the header above the hero */
+    .hero { display: grid; grid-template-rows: auto auto; aspect-ratio: auto; overflow: clip; }
     .hero__content { display: contents; }
     .hero__lead { grid-row: 1; grid-column: 1; padding: var(--space-stack-loose) var(--space-page) 0; position: relative; z-index: 1; }
     .hero__bg {
@@ -91,29 +93,82 @@
   }
 
   /* =============================== SERVICES ============================= */
-  .services__list { display: flex; flex-direction: column; gap: var(--space-stack-loose); }
+  /* Services are separated by a 1px brand-black divider with --space-divider
+     (27) clear each side: horizontal between stacked cards on mobile,
+     vertical between side-by-side cards on tablet and desktop. The rule runs
+     from the label's cap line to the body's last baseline. */
+  .services__list {
+    --_divided-gap: calc(2 * var(--space-divider) + var(--divider-width));
+    display: flex; flex-direction: column; gap: var(--_divided-gap);
+  }
+  .card { position: relative; }
+  .card + .card::before {
+    content: ""; position: absolute;
+    inset-inline: 0; inset-block-start: calc(-1 * (var(--space-divider) + var(--divider-width)));
+    block-size: var(--divider-width);
+    background: var(--divider-color);
+  }
   @media (min-width: 48em) {
-    .services__list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--space-gutter); row-gap: var(--space-stack-loose); }
+    .services__list {
+      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: var(--_divided-gap); row-gap: var(--space-stack-loose);
+    }
+    .card + .card::before {
+      inset-block: 0; inset-inline: calc(-1 * (var(--space-divider) + var(--divider-width))) auto;
+      inline-size: var(--divider-width); block-size: auto;
+    }
+    .card:nth-child(odd)::before { display: none; } /* first in each row */
   }
   @media (min-width: 90em) {
     .services__list { grid-row: 2; align-self: start; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .card:nth-child(odd)::before { display: block; }
+    .card:first-child::before { display: none; }
   }
 
   /* =============================== BRANDS =============================== */
   .brands { padding-block-end: var(--space-stack-loose); overflow: hidden; }
   .brands__logos { display: flex; justify-content: center; }
-  /* mobile: the 1020px-wide logo sheet is cropped by the viewport, as drawn */
+  /* mobile: the 1020px-wide logo sheet runs edge to edge in a swipeable
+     strip. Script pans it right-to-left as the section scrolls past, until
+     the visitor touches it (and never with reduced motion). */
+  .brands__scroller {
+    inline-size: calc(100% + 2 * var(--space-page));
+    margin-inline: calc(-1 * var(--space-page));
+    padding-inline: var(--space-page);
+    display: flex;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x pan-y;
+  }
+  .brands__scroller::-webkit-scrollbar { display: none; }
+  .brands__scroller:focus-visible { outline-offset: -4px; }
   .brands__all { width: calc(1020 / 390 * 100vw); max-width: none; flex: none; }
   .brands__rows { display: none; }
   @media (min-width: 48em) {
     .brands { padding-block-end: var(--space-section); }
+    .brands__scroller { inline-size: 100%; margin-inline: 0; padding-inline: 0; overflow: visible; justify-content: center; }
     .brands__all { width: 100%; max-width: 1360px; flex: 1 1 auto; }
   }
   @media (min-width: 90em) {
-    .brands { grid-template-rows: auto 1fr; }
-    .brands__logos { grid-row: 1 / -1; align-self: center; justify-self: center; width: calc(1705 / 1830 * 100%); display: block; }
+    .brands__scroller { display: none; }
+  }
+  @media (min-width: 90em) {
+    /* Logos hang from the content line. The row images carry 37.4px of white
+       above the first row's marks and 32.9px below the last; offset by that
+       (as % of the grid area's width) so the visible logos sit on the line.
+       Rows are 90 (--space-stack-loose) apart, mark to mark, and the same 90
+       closes the section below the last row, mirroring the ~88 of white
+       between the heading's baseline and the first row above. */
+    .brands { padding-block-end: 0; }
+    .brands__logos {
+      grid-row: 2; align-self: start; justify-self: center;
+      width: calc(1705 / 1830 * 100%); display: block;
+      margin-block: calc(-37.4 / 1830 * 100%) calc(var(--space-stack-loose) - 32.9 / 1830 * 100%);
+    }
     .brands__all { display: none; }
-    .brands__rows { display: block; --fw: 1705; --fh: 600; }
+    .brands__rows { display: block; --fw: 1705; --fh: 457; }
     .brands__rows .art { mix-blend-mode: multiply; }
   }
 
