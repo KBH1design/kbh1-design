@@ -6,14 +6,14 @@
 
 @layer compositions {
   /* Shared: full-cover background picture */
-  .hero__bg, .stencil__bg, .project__texture, .contact__bg {
+  .hero__bg, .stencil__bg, .project__texture {
     position: absolute; inset: 0; z-index: 0;
   }
-  :is(.hero__bg, .stencil__bg, .project__texture, .contact__bg) img {
+  :is(.hero__bg, .stencil__bg, .project__texture) img {
     width: 100%; height: 100%; object-fit: cover;
   }
   /* Absolutely positioned layers span the whole section, not the grid area */
-  :is(.hero__bg, .stencil__bg, .project__texture, .contact__bg, .contact__logo) {
+  :is(.hero__bg, .stencil__bg, .project__texture) {
     grid-column: auto; grid-row: auto;
   }
 
@@ -128,14 +128,16 @@
   /* =============================== BRANDS =============================== */
   .brands { padding-block-end: var(--space-stack-loose); overflow: hidden; }
   .brands__logos { display: flex; justify-content: center; }
-  /* mobile: the 1020px-wide logo sheet runs edge to edge in a swipeable
-     strip. Script pans it right-to-left as the section scrolls past, until
-     the visitor touches it (and never with reduced motion). */
+  /* mobile: the logo field runs wider than the screen in a swipeable strip.
+     Script pans it right-to-left as the section scrolls past, until the
+     visitor touches it (and never with reduced motion). */
   .brands__scroller {
+    --_field: calc(1020 / 390 * 100vw);
     inline-size: calc(100% + 2 * var(--space-page));
     margin-inline: calc(-1 * var(--space-page));
     padding-inline: var(--space-page);
     display: flex;
+    flex-direction: column;
     overflow-x: auto;
     overscroll-behavior-x: contain;
     scrollbar-width: none;
@@ -144,32 +146,44 @@
   }
   .brands__scroller::-webkit-scrollbar { display: none; }
   .brands__scroller:focus-visible { outline-offset: -4px; }
-  .brands__all { width: calc(1020 / 390 * 100vw); max-width: none; flex: none; }
-  .brands__rows { display: none; }
+  /* Rows run edge to edge with equal gaps. Each logo's width (--w, in units of
+     the 1705 wide field) is set for equal visual weight, not equal size. */
+  .brands__row {
+    flex: none;
+    inline-size: var(--_field);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .brands__row + .brands__row { margin-block-start: calc(var(--_field) * 90 / 1705); }
+  .brands__logo {
+    flex: none;
+    inline-size: calc(var(--_field) * var(--w) / 1705);
+    block-size: auto;
+    filter: url(#logo-lighten);
+  }
   @media (min-width: 48em) {
     .brands { padding-block-end: var(--space-section); }
-    .brands__scroller { inline-size: 100%; margin-inline: 0; padding-inline: 0; overflow: visible; justify-content: center; }
-    .brands__all { width: 100%; max-width: 1360px; flex: 1 1 auto; }
+    .brands__scroller {
+      container-type: inline-size; /* so the field matches the column, scrollbar or not */
+      --_field: 100cqw;
+      inline-size: 100%;
+      margin-inline: 0;
+      padding-inline: 0;
+      overflow: visible;
+    }
   }
   @media (min-width: 90em) {
-    .brands__scroller { display: none; }
-  }
-  @media (min-width: 90em) {
-    /* Logos hang from the content line. The row images carry 37.4px of white
-       above the first row's marks and 32.9px below the last; offset by that
-       (as % of the grid area's width) so the visible logos sit on the line.
-       Rows are 90 (--space-stack-loose) apart, mark to mark, and the same 90
-       closes the section below the last row, mirroring the ~88 of white
-       between the heading's baseline and the first row above. */
+    /* The tallest logo in the first row sits on the content line. Rows are
+       90 (--space-stack-loose) apart, mark to mark, and the same 90 closes
+       the section below the last row. */
     .brands { padding-block-end: 0; }
     .brands__logos {
       grid-row: 2; align-self: start; justify-self: center;
       width: calc(1705 / 1830 * 100%); display: block;
-      margin-block: calc(-37.4 / 1830 * 100%) calc(var(--space-stack-loose) - 32.9 / 1830 * 100%);
+      margin-block: 0 var(--space-stack-loose);
     }
-    .brands__all { display: none; }
-    .brands__rows { display: block; --fw: 1705; --fh: 457; }
-    .brands__rows .art { mix-blend-mode: multiply; }
+    .brands__row + .brands__row { margin-block-start: var(--space-stack-loose); }
   }
 
   /* =============================== STENCIL ============================== */
@@ -250,6 +264,46 @@
     .rtp__poster  { --x: 862; --y: 0;   --w: 657.75; }
     .rtp__hashtag { --x: 285; --y: 738; --w: 299.35; }
   }
+  /* Tablet: copy in columns 1-4, poster in 5-8. Both hang from the content
+     line, on one grid, so the poster grows with its columns. The band fills
+     the lower half of the figure, whatever its height. */
+  @media (min-width: 48em) and (max-width: 89.99em) {
+    .project--rtp {
+      display: grid;
+      grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+      column-gap: var(--space-gutter);
+    }
+    .project--rtp > .section__head { grid-column: 1 / -1; }
+    /* The poster sits one page margin in from the paper's right edge, so the
+       copy gives up the same width to keep its gutter. */
+    .project--rtp > .project__blurb {
+      grid-column: 1 / 5; grid-row: 2; align-self: start;
+      max-inline-size: min(var(--measure-blurb), 100% - var(--space-page));
+    }
+    .rtp__figure {
+      grid-column: 1 / -1; grid-row: 2;
+      z-index: 0;
+      display: grid;
+      grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+      column-gap: var(--space-gutter);
+      aspect-ratio: auto;
+      margin: 0;
+    }
+    .rtp__paper { left: 0; top: 50%; width: 100%; height: 50%; }
+    .rtp__paper img { height: 100%; object-fit: cover; object-position: top; }
+    .rtp__poster, .rtp__shadow {
+      position: relative; left: calc(-1 * var(--space-page)); top: auto;
+      grid-column: 5 / -1; grid-row: 1;
+    }
+    .rtp__poster { width: 100%; margin-block-end: calc(60 / 657.75 * 100%); }
+    .rtp__shadow { width: 98.06%; margin-inline-start: 1.06%; align-self: end; }
+    .rtp__hashtag {
+      left: calc((100% - var(--space-gutter)) / 4 - var(--space-page) / 2);
+      top: 75%;
+      width: calc((100% - var(--space-gutter)) / 2 * 0.455);
+      translate: -50% -50%;
+    }
+  }
   @media (min-width: 90em) {
     .rtp__figure { grid-row: 1 / -1; align-self: end; margin: 0; z-index: 0; }
   }
@@ -294,20 +348,56 @@
   .health__photo  { --x: 0;  --y: 0;   --w: 390; height: calc(640 / 1026 * 100%); }
   .health__photo img { height: 100%; object-fit: cover; }
   .device         { --x: 60; --y: 404; --w: 269.6; }
-  .health__logo   { --x: 96; --y: 889; --w: 196.88; }
+  .health__logo   { --x: 112.15; --y: 914.4; --w: 164.6; block-size: auto; }
 
+  /* Tablet and desktop: the photo is framed by the background colour, one
+     section margin from the edges, like the PurePalette image. The figure
+     hands its children to the section's grid. */
   @media (min-width: 48em) {
-    .health__figure { --fw: 1920; --fh: 1080; }
-    .health__photo  { --x: 665;  --y: 0;   --w: 1255; height: 100%; }
-    .device         { --x: 177;  --y: 275; --w: 303.3; }
-    .health__logo   { --x: 1684; --y: 972; --w: 221.49; }
+    .health__figure { --fw: 1920; --fh: 1080; display: contents; }
+    .health__photo, .health__logo { position: relative; left: auto; top: auto; }
+    .health__photo { align-self: stretch; width: 100%; height: auto; }
+    .health__photo img { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .health__logo {
+      align-self: end; justify-self: end;
+      width: 18.04%;
+      margin-inline-end: var(--space-page);
+      margin-block-end: var(--space-section);
+    }
   }
+  /* Tablet: title, copy and phone in columns 1-3; photo in 4-8, its top level
+     with the title's cap height. It uses a taller crop from the same master
+     and keeps the desktop frame's shape unless the left column is taller,
+     then it grows to match, always holding the head at the top. */
+  @media (min-width: 48em) and (max-width: 89.99em) {
+    .project--health {
+      display: grid;
+      grid-template-columns: repeat(var(--grid-columns), minmax(0, 1fr));
+      grid-template-rows: auto auto 1fr;
+      column-gap: var(--space-gutter);
+    }
+    .project--health > .section__head { grid-column: 1 / 4; }
+    .project--health > .project__blurb { grid-column: 1 / 4; grid-row: 2; max-inline-size: none; }
+    .health__photo, .health__logo { grid-column: 4 / -1; grid-row: 1 / 4; }
+    .health__photo { aspect-ratio: 1210 / 990; }
+    .health__photo img { object-position: 50% 0; }
+    .device {
+      position: relative; left: auto; top: auto;
+      grid-column: 1 / 4; grid-row: 3;
+      justify-self: center;
+      width: 100%; max-width: 303.3px;
+    }
+  }
+  /* Desktop: the phone stays on the artboard; the photo fills columns 5-12,
+     the same 1210 x 990 frame as PurePalette. */
   @media (min-width: 90em) {
-    .health__figure { position: absolute; inset: 0; margin: 0; z-index: 0; grid-column: auto; grid-row: auto; }
+    .device { --x: 177; --y: 275; --w: 303.3; }
+    .health__photo, .health__logo { grid-column: 5 / -1; grid-row: 1 / -1; }
     .project--health > :not(.health__figure) { grid-column: 1 / 5; }
   }
 
   /* =============================== HOW I WORK =========================== */
+  .how__picture { display: contents; }
   .how__image { aspect-ratio: 900 / 990; width: 100%; object-fit: cover; }
   .how__steps { display: flex; flex-direction: column; gap: var(--space-stack); margin-block-start: var(--space-stack-loose); }
   @media (min-width: 48em) {
@@ -318,8 +408,15 @@
       column-gap: var(--space-gutter);
     }
     .how .section__head { grid-column: 1 / 5; grid-row: 1; }
-    .how__image { grid-column: 5 / -1; grid-row: 1 / -1; }
+    /* The whole figure from the master: its head stays at the top and the body
+       stays centred as the frame changes shape. */
+    .how__image { grid-column: 5 / -1; grid-row: 1 / -1; object-position: 48% 0; }
     .how__steps { grid-column: 1 / 5; grid-row: 2; align-self: end; margin: 0; }
+  }
+  /* Tablet: fills the section's height. The frame holds the desktop ratio if
+     the steps are shorter. */
+  @media (min-width: 48em) and (max-width: 89.99em) {
+    .how__image { align-self: stretch; height: auto; }
   }
   @media (min-width: 90em) {
     .how { grid-template-rows: auto 1fr; }
@@ -329,13 +426,25 @@
 
   /* =============================== OUTSIDE THE BRIEF ==================== */
   .outside__group { display: flex; flex-direction: column; gap: var(--space-stack); margin-block-start: var(--space-stack-loose); }
-  .outside__image { aspect-ratio: 1; width: 100%; object-fit: cover; }
+  /* The photo crops to its frame; the logo is its own vector layer, always
+     whole and centred. Mobile's square frame shows it larger. */
+  .outside__image { position: relative; aspect-ratio: 1; width: 100%; overflow: hidden; }
+  .outside__photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .outside__logo {
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-start: 50%;
+    inline-size: 36.4%;
+    block-size: auto;
+    translate: -50% -50%;
+  }
   .outside__links { display: flex; justify-content: space-between; gap: var(--space-inline-action); }
   @media (min-width: 48em) {
     .outside__blurb { max-inline-size: 24.2em; }
     .outside__group { margin-block-start: var(--space-stack); }
     .outside__links { order: -1; justify-content: start; }
     .outside__image { aspect-ratio: 1830 / 680; margin-block-start: var(--space-stack-loose); }
+    .outside__logo { inline-size: 13.52%; }
   }
   @media (min-width: 90em) {
     .section.outside { grid-template-rows: auto auto auto 1fr; }
@@ -346,21 +455,39 @@
   }
 
   /* =============================== CONTACT ============================== */
-  .contact { aspect-ratio: var(--frame-contact); overflow: hidden; }
   .contact__actions { margin-block-start: var(--space-stack); }
+
+  /* The mark: the grain from just below its white line, anchored bottom left,
+     with the logo centred in the block. The art can be wider than the block
+     and bleed off the right. */
+  .contact-mark {
+    position: relative;
+    display: grid;
+    place-items: center;
+    aspect-ratio: var(--frame-contact-mark);
+    overflow: hidden;
+    background: var(--color-bg);
+  }
+  .contact__bg { position: absolute; inset: 0; }
+  .contact__bg img {
+    position: absolute;
+    inset-block-end: 0;
+    inset-inline-start: 0;
+    inline-size: var(--contact-art-width);
+    max-inline-size: none;
+    block-size: auto;
+  }
   .contact__logo {
-    position: absolute; z-index: 1;
-    left: 50%; top: calc(606 / 960 * 100%);
-    width: calc(176.34 / 390 * 100%);
-    translate: -50% 0;
+    position: relative;
+    inline-size: calc(176.34 / 390 * 100%);
+    block-size: auto;
   }
   @media (min-width: 48em) {
-    .contact__logo { top: calc(681 / 1080 * 100%); width: calc(198.38 / 1920 * 100%); }
+    .contact__logo { inline-size: calc(198.38 / 1920 * 100%); }
   }
   @media (min-width: 90em) {
     .contact__text, .contact__actions { grid-column: 1 / -1; }
     .contact__actions { grid-row: 3; align-self: start; }
     .section.contact { grid-template-rows: auto auto auto 1fr; }
-    .contact__logo { grid-row: auto; }
   }
 }

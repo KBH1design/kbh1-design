@@ -95,18 +95,41 @@
     <!-- ================================================================ BRANDS -->
     <section class="section section--hang brands" data-surface="paper" aria-labelledby="brands-title">
       <h2 class="section__head t-heading" id="brands-title">Some of the brands I’ve worked with</h2>
-      <div class="brands__logos" role="img" aria-label="Client logos: NVIDIA, Arla, Castello, ReSound, Lurpak, adidas, Microsoft, Intel, VMware, AMD, Dell Technologies, NIVEA MEN, Nordea, Amazon, Citroën, ILM, Jabra">
+      <div class="brands__logos" role="img" aria-label="Client logos: NVIDIA, Arla, Castello, ReSound, Nordea, WPP, Lurpak, adidas, Microsoft, Intel, Citroën, NIVEA MEN, VMware, AMD, Dell Technologies, Amazon, Jabra">
+        <!-- Lighten against #808080: nothing goes darker than this grey, anything lighter is kept. -->
+        <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+          <filter id="logo-lighten" color-interpolation-filters="sRGB">
+            <feComponentTransfer>
+              <feFuncR type="table" tableValues=".502 .502 1"/>
+              <feFuncG type="table" tableValues=".502 .502 1"/>
+              <feFuncB type="table" tableValues=".502 .502 1"/>
+            </feComponentTransfer>
+          </filter>
+        </svg>
         <div class="brands__scroller">
-          <img class="brands__all" src="assets/img/logos-all.png" width="1360" height="533" alt="">
-        </div>
-        <div class="brands__rows figure" aria-hidden="true">
-          <img class="art" style="--x:0;    --y:0;   --w:1604.5" src="assets/img/logos-r1a.jpg" alt="">
-          <img class="art" style="--x:1420; --y:0;   --w:284.5"  src="assets/img/logos-r1b.jpg" alt="">
-          <img class="art" style="--x:92;   --y:150; --w:1612.5" src="assets/img/logos-r2.jpg"  alt="">
-          <img class="art" style="--x:884;  --y:317; --w:520"    src="assets/img/logos-r3c.jpg" alt="">
-          <img class="art" style="--x:542;  --y:317; --w:330"    src="assets/img/logos-r3b.jpg" alt="">
-          <img class="art" style="--x:1395; --y:317; --w:310"    src="assets/img/logos-r3d.jpg" alt="">
-          <img class="art" style="--x:0;    --y:317; --w:557.5"  src="assets/img/logos-r3a.jpg" alt="">
+          <div class="brands__row">
+            <img class="brands__logo" style="--w:276" src="assets/img/logos/nvidia.svg" width="276" height="52" alt="">
+            <img class="brands__logo" style="--w:141" src="assets/img/logos/arla.svg" width="141" height="92" alt="">
+            <img class="brands__logo" style="--w:194" src="assets/img/logos/castello.svg" width="194" height="79" alt="">
+            <img class="brands__logo" style="--w:200" src="assets/img/logos/resound.svg" width="200" height="69" alt="">
+            <img class="brands__logo" style="--w:236" src="assets/img/logos/nordea.svg" width="236" height="50" alt="">
+            <img class="brands__logo" style="--w:224" src="assets/img/logos/wpp.svg" width="224" height="68" alt="">
+          </div>
+          <div class="brands__row">
+            <img class="brands__logo" style="--w:237" src="assets/img/logos/lurpak.svg" width="237" height="79" alt="">
+            <img class="brands__logo" style="--w:145" src="assets/img/logos/adidas.svg" width="145" height="97" alt="">
+            <img class="brands__logo" style="--w:292" src="assets/img/logos/microsoft.svg" width="292" height="63" alt="">
+            <img class="brands__logo" style="--w:158" src="assets/img/logos/intel.svg" width="158" height="62" alt="">
+            <img class="brands__logo" style="--w:150" src="assets/img/logos/citroen.svg" width="150" height="106" alt="">
+            <img class="brands__logo" style="--w:115" src="assets/img/logos/nivea.svg" width="115" height="115" alt="">
+          </div>
+          <div class="brands__row">
+            <img class="brands__logo" style="--w:292" src="assets/img/logos/vmware.svg" width="292" height="47" alt="">
+            <img class="brands__logo" style="--w:229" src="assets/img/logos/amd.svg" width="229" height="55" alt="">
+            <img class="brands__logo" style="--w:368" src="assets/img/logos/dell.svg" width="368" height="49" alt="">
+            <img class="brands__logo" style="--w:216" src="assets/img/logos/amazon.svg" width="216" height="66" alt="">
+            <img class="brands__logo" style="--w:200" src="assets/img/logos/jabra.svg" width="200" height="69" alt="">
+          </div>
         </div>
       </div>
     </section>
@@ -163,7 +186,7 @@
       <p class="project__blurb t-body"><strong>Making the unfamiliar feel human.</strong> Identities that make new technology understandable and recognisable.</p>
       <div class="project__media ai__figure">
         <img class="ai__image" src="assets/img/ai-purepalette.jpg" width="1613" height="1319" loading="lazy" alt="">
-        <img class="ai__logo" src="assets/img/ai-purepalette-logo.png" width="500" height="127" loading="lazy" alt="PurePalette identity on a violet and orange gradient">
+        <img class="ai__logo" src="assets/img/logos/purepalette.svg" width="1072" height="272" loading="lazy" alt="PurePalette identity on a violet and orange gradient">
       </div>
     </section>
 
@@ -173,22 +196,26 @@
       <p class="project__blurb t-body"><strong>Clarity with a human touch.</strong> Credible communication with a&nbsp;human voice.</p>
       <div class="project__media health__figure figure">
         <picture class="art health__photo">
-          <source media="(min-width: 48em)" srcset="assets/img/nomae-hero.jpg" width="1673" height="1440">
-          <img src="assets/img/nomae-hero-m.jpg" alt="Black and white portrait, hair in motion" width="520" height="853" loading="lazy">
+          <source media="(min-width: 48em) and (max-width: 89.99em)" srcset="assets/img/nomae-hero-tall-1000.jpg 1000w, assets/img/nomae-hero-tall.jpg 1700w" sizes="58vw" width="1700" height="2328">
+          <source media="(min-width: 90em)" srcset="assets/img/nomae-hero-1210.jpg 1210w, assets/img/nomae-hero.jpg 2420w" sizes="63vw" width="2420" height="2087">
+          <img src="assets/img/nomae-hero-m.jpg" alt="Black and white portrait, hair in motion" width="1170" height="1916" loading="lazy">
         </picture>
         <div class="art device">
           <img class="device__shadow" src="assets/img/device-shadow.png" alt="" width="451" height="646" loading="lazy">
-          <img class="device__screen" src="assets/img/nomae-screen.jpg" alt="NOMAE Instagram grid" width="233" height="415" loading="lazy">
+          <img class="device__screen" src="assets/img/nomae-screen.jpg" alt="NOMAE Instagram grid" width="750" height="1334" loading="lazy">
           <img class="device__frame" src="assets/img/device-iphone-se.png" alt="" width="404" height="708" loading="lazy">
         </div>
-        <img class="art health__logo" src="assets/img/nomae-logo.png" width="295" height="125" alt="NOMAE" loading="lazy">
+        <img class="art health__logo" src="assets/img/logos/nomae.svg" width="584" height="117" alt="NOMAE" loading="lazy">
       </div>
     </section>
 
     <!-- ================================================================ HOW I WORK -->
     <section class="section how" id="how" data-surface="paper" aria-labelledby="how-title">
       <h2 class="section__head t-heading" id="how-title">How I work</h2>
-      <img class="how__image" src="assets/img/how-solarized.jpg" width="1200" height="1320" loading="lazy" alt="Solarised portrait in orange and pink spray tones">
+      <picture class="how__picture">
+        <source media="(min-width: 48em)" srcset="assets/img/how-full-800.jpg 800w, assets/img/how-full.jpg 1400w, assets/img/how-full-1800.jpg 1800w" sizes="(min-width: 90em) 47vw, 45vw" width="1800" height="2405">
+        <img class="how__image" src="assets/img/how-solarized.jpg" width="1050" height="1155" loading="lazy" alt="Solarised portrait in orange and pink spray tones">
+      </picture>
       <ol class="how__steps" role="list">
         <li class="step"><h3 class="t-display">Look</h3><p class="t-body">We start by listening and auditing what exists. No assumptions.</p></li>
         <li class="step"><h3 class="t-display">Shape</h3><p class="t-body">I turn what we find into a clear idea and a visual direction you can react to early.</p></li>
@@ -201,7 +228,13 @@
       <h2 class="section__head t-heading" id="outside-title">Outside the brief</h2>
       <p class="outside__blurb t-body">I also make music as LNX and build visual worlds around it: artwork, type, motion and video. It keeps my eye fresh and my hands busy, and it’s where I try things before clients need them.</p>
       <div class="outside__group">
-        <img class="outside__image" src="assets/img/lnx-hero.jpg" width="2440" height="907" loading="lazy" alt="LNX logo over a concrete flyover in fog">
+        <div class="outside__image">
+          <picture>
+            <source media="(min-width: 48em)" srcset="assets/img/lnx-bg-1830.jpg 1830w, assets/img/lnx-bg.jpg 3660w" sizes="100vw" width="3660" height="1569">
+            <img class="outside__photo" src="assets/img/lnx-bg-m.jpg" width="1200" height="1200" loading="lazy" alt="A concrete flyover disappearing into fog">
+          </picture>
+          <img class="outside__logo" src="assets/img/logos/lnx.svg" width="475" height="167" loading="lazy" alt="LNX">
+        </div>
         <p class="outside__links">
           <a class="link t-body" href="#">Listen to LNX</a>
           <a class="link t-body" href="#">See the visual work</a>
@@ -210,19 +243,23 @@
     </section>
 
     <!-- ================================================================ CONTACT -->
-    <section class="section contact" id="contact" data-surface="ink" aria-labelledby="contact-title">
-      <picture class="contact__bg">
-        <source media="(min-width: 48em)" srcset="assets/img/footer-grain.jpg" width="2000" height="1125">
-        <img src="assets/img/footer-grain-m.jpg" alt="" width="457" height="1125" loading="lazy">
-      </picture>
+    <section class="section section--hang contact" id="contact" data-surface="ink" aria-labelledby="contact-title">
       <h2 class="section__head t-heading" id="contact-title">Got something that<br> needs to make sense?</h2>
       <p class="contact__text t-body">Tell me what you’re working on. I reply within a working day.</p>
       <div class="actions contact__actions">
         <a class="button" href="mailto:kbh1design@gmail.com"><span class="t-action">kbh1design@gmail.com</span></a>
         <a class="button" href="#"><span class="t-action">Book a 20-minute call</span></a>
       </div>
-      <img class="contact__logo" src="assets/img/kbh1-logo-white.png" width="265" height="265" alt="KBH1 Design logo" loading="lazy">
     </section>
+
+    <!-- The KBH1 Design mark on the grain, cropped just below its white line -->
+    <div class="contact-mark" data-surface="ink">
+      <picture class="contact__bg">
+        <source media="(min-width: 48em)" srcset="assets/img/footer-grain.jpg" width="2000" height="1125">
+        <img src="assets/img/footer-grain-m.jpg" alt="" width="457" height="1125" loading="lazy">
+      </picture>
+      <img class="contact__logo" src="assets/img/logos/kbh1.svg" width="540" height="540" alt="KBH1 Design logo" loading="lazy">
+    </div>
   </main>
 
   <!-- ================================================================ FOOTER -->
@@ -275,7 +312,7 @@
         strip.addEventListener(t, handOver, { passive: true }));
       addEventListener('scroll', pan, { passive: true }); // fires once per frame
       addEventListener('resize', pan);
-      strip.querySelector('img').addEventListener('load', pan);
+      addEventListener('load', pan);
       pan();
     })();
   </script>

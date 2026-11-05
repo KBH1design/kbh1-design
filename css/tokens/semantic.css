@@ -7,7 +7,8 @@
    Breakpoints (custom properties can't be used inside @media, so they are
    documented here and used literally):
      mobile   0 – 47.99em    master artboard 390   (default, mobile first)
-     tablet   48em – 89.99em derived: desktop type + space, fluid layout
+     tablet   48em – 89.99em derived: desktop space, fluid layout
+                             type: mobile scale, desktop scale from 64em (1024)
      desktop  ≥ 90em (1440)  master artboard 1920
    ========================================================================== */
 
@@ -141,14 +142,14 @@
     /* Section proportions (aspect of the master artboard frames) */
     --frame-hero:    390 / 770;
     --frame-stencil: 390 / 960;
-    --frame-contact: 390 / 960;
+    --frame-contact-mark: 457 / 582; /* grain from just below its white line */
+    --contact-art-width:  100%;
     --frame-footer:  390 / 480;
   }
 
   /* ---------------------------- TABLET ----------------------------------- */
   @media (min-width: 48em) {
     :root {
-      --type-scale: 1;
       --text-stencil-size: var(--_size-stencil-desktop);
       --text-label-pitch-stacked: var(--text-label-size);
 
@@ -177,8 +178,18 @@
 
       --frame-hero:    auto; /* tablet: sized by the art + content, see compositions */
       --frame-stencil: 1920 / 1080;
-      --frame-contact: 1920 / 1080;
+      --frame-contact-mark: 2000 / 647; /* portrait tablet: art enlarged, bleeds right */
+      --contact-art-width:  111.1%;
       --frame-footer:  1920 / 540;
+    }
+  }
+
+  /* ---------------------------- LANDSCAPE TABLET AND UP ------------------ */
+  @media (min-width: 64em) {
+    :root {
+      --type-scale: 1;
+      --frame-contact-mark: 2000 / 582;
+      --contact-art-width:  100%;
     }
   }
 

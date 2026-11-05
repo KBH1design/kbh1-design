@@ -55,7 +55,7 @@ Tracking was calibrated by fitting browser word positions to InDesign's exported
 
 **Colour** — ink `#111111`, paper `#FFFFFF`, mist `#F2F2F2` (light type, light panel, button rule), spray `#E1E1E1` (stencil type), cool `#E3E7EA` and steel `#8C99A3` (image fallbacks). Sections set `data-surface="ink|paper|mist|cool"`; components read `--color-fg / --color-bg / --color-rule`.
 
-**Breakpoints** — mobile < 48em (390 master) · tablet 48–89.99em (derived) · desktop ≥ 90em / 1440 (1920 master: each section is one 16:9 screen on a 12-column grid).
+**Breakpoints** — mobile < 48em (390 master) · tablet 48–89.99em (derived; mobile type scale below 64em / 1024, desktop type scale from there) · desktop ≥ 90em / 1440 (1920 master: each section is one 16:9 screen on a 12-column grid).
 
 ## Known gaps
 

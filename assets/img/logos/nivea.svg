@@ -1,0 +1,52 @@
+<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="820.243 400.243 279.514 279.514">
+  <defs>
+    <style>
+      .st0 {
+        fill: none;
+      }
+
+      .st1 {
+        fill: url(#linear-gradient);
+      }
+
+      .st2 {
+        clip-path: url(#clippath-1);
+      }
+
+      .st3 {
+        fill: #fff;
+      }
+
+      .st4 {
+        fill: #191919;
+      }
+
+      .st5 {
+        clip-path: url(#clippath);
+      }
+    </style>
+    <clipPath id="clippath">
+      <path class="st0" d="M821.1,540c0,76.7,62.2,138.9,138.9,138.9s138.9-62.2,138.9-138.9-62.2-138.9-138.9-138.9-138.9,62.2-138.9,138.9"/>
+    </clipPath>
+    <linearGradient id="linear-gradient" x1="281.6" y1="881" x2="282.6" y2="881" gradientTransform="translate(-77419.5276 245278.6522) scale(277.7955 -277.7955)" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="silver"/>
+      <stop offset="0" stop-color="silver"/>
+      <stop offset=".2" stop-color="#b6b6b6"/>
+      <stop offset=".3" stop-color="#ebebeb"/>
+      <stop offset=".4" stop-color="#ebebeb"/>
+      <stop offset=".6" stop-color="#b6b6b6"/>
+      <stop offset="1" stop-color="silver"/>
+    </linearGradient>
+    <clipPath id="clippath-1">
+      <rect class="st0" x="821.1" y="401.1" width="277.8" height="277.8"/>
+    </clipPath>
+  </defs>
+  <g class="st5">
+    <rect class="st1" x="821.1" y="401.1" width="277.8" height="277.8"/>
+  </g>
+  <g class="st2">
+    <path class="st3" d="M960,413.6c-69.8,0-126.4,56.6-126.4,126.4s56.6,126.4,126.4,126.4,126.4-56.6,126.4-126.4-56.6-126.4-126.4-126.4M931.1,595.3h-7.5v-32.7h-.1l-13.8,32.7h-6.7l-13.9-32.7h-.1v32.7h-7.5v-43.1h11.3l13.5,31.9,13.7-31.9h11.1v43.1ZM983.6,595.3h-39.4v-43.1h38.6v7.2h-30.2v10h26v7.2h-26v11.4h30.9v7.2ZM1039.2,595.3h-7.7l-30-32.3v32.3h-8.1v-43.1h8.9l28.8,31.1v-31.1h8.1v43.1Z"/>
+    <path class="st4" d="M1033.7,526h10.7s-5.3-11-5.3-11c0,0-5.4,11.1-5.4,11"/>
+    <path class="st4" d="M960,413.6c-69.8,0-126.4,56.6-126.4,126.4s56.6,126.4,126.4,126.4,126.4-56.6,126.4-126.4-56.6-126.4-126.4-126.4M982.1,494.8h27.6v10.9h-13.5v6h13.5s0,8.1,0,8.1h-13.5v6.7h13.5v11.2h-27.6v-43ZM945.6,494.8s8.8,17.9,9.6,19.3l9.6-19.3h15c0,0-24.6,46.2-24.6,46.2l-24.6-46.2h15ZM914.2,494.8s14.1,0,14.1,0v43h-14.1v-43ZM878.6,537.8h-14.1v-46.3l22.9,19.9v-16.7h14.1v46.2l-22.8-19.9v16.7ZM931.1,595.3h-7.5v-32.7h-.1l-13.8,32.7h-6.7l-13.9-32.7h-.1v32.7h-7.5v-43.1h11.3l13.5,31.9,13.7-31.9h11.1v43.1ZM983.6,595.3h-39.4v-43.1h38.6v7.2h-30.2v10h26v7.2h-26v11.4h30.9v7.2ZM1039.2,595.3h-7.7l-30-32.3v32.3h-8.1v-43.1h8.9l28.8,31.1v-31.1h8.1v43.1ZM1047.8,533.1h-17.6l-2.4,4.7h-14.7s17.2-31.2,25.9-46.6l25.9,46.6h-14.8l-2.3-4.7Z"/>
+  </g>
+</svg>

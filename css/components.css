@@ -114,4 +114,11 @@
   @media (min-width: 48em) {
     .site-footer__list { flex-direction: row; flex-wrap: wrap; justify-content: center; column-gap: var(--space-inline-meta); row-gap: var(--space-stack-tight); }
   }
+  /* Tablet: company details on one line, ways to get in touch on the next. */
+  @media (min-width: 48em) and (max-width: 89.99em) {
+    .site-footer__list { row-gap: 0; }
+    .site-footer__list::after { content: ""; flex-basis: 100%; order: 2; }
+    .site-footer__list > :nth-child(-n + 3) { order: 1; }
+    .site-footer__list > :nth-child(n + 4) { order: 3; margin-block-start: var(--space-stack-tight); }
+  }
 }
