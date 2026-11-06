@@ -3,11 +3,12 @@
   publish = "."
   command = ""
 
-# Long cache for images; CSS revalidates so token changes show up at once.
+# Browsers check for newer images and CSS on each visit, so a replaced file
+# shows up at once even when it keeps its name.
 [[headers]]
   for = "/assets/*"
   [headers.values]
-    Cache-Control = "public, max-age=604800"
+    Cache-Control = "public, max-age=0, must-revalidate"
 
 [[headers]]
   for = "/css/*"
