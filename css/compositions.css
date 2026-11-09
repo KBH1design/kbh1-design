@@ -379,13 +379,15 @@
     .project--health > .section__head { grid-column: 1 / 4; }
     .project--health > .project__blurb { grid-column: 1 / 4; grid-row: 2; max-inline-size: none; }
     .health__photo, .health__logo { grid-column: 4 / -1; grid-row: 1 / 4; }
-    .health__photo { aspect-ratio: 1210 / 990; }
+    /* The ratio is a spacer, not aspect-ratio: Safari holds an aspect-ratio
+       box at that shape and won't let it stretch to the row. */
+    .health__photo::before { content: ""; display: block; padding-block-start: calc(990 / 1210 * 100%); }
     .health__photo img { object-position: 50% 0; }
     .device {
       position: relative; left: auto; top: auto;
       grid-column: 1 / 4; grid-row: 3;
       justify-self: center;
-      width: 100%; max-width: 303.3px;
+      width: 92%; max-width: 279px;
     }
   }
   /* Desktop: the phone stays on the artboard; the photo fills columns 5-12,
@@ -414,9 +416,11 @@
     .how__steps { grid-column: 1 / 5; grid-row: 2; align-self: end; margin: 0; }
   }
   /* Tablet: fills the section's height. The frame holds the desktop ratio if
-     the steps are shorter. */
+     the steps are shorter, using a spacer so that Safari stretches it too. */
   @media (min-width: 48em) and (max-width: 89.99em) {
-    .how__image { align-self: stretch; height: auto; }
+    .how__picture { display: block; position: relative; grid-column: 5 / -1; grid-row: 1 / -1; align-self: stretch; }
+    .how__picture::before { content: ""; display: block; padding-block-start: calc(990 / 900 * 100%); }
+    .how__image { position: absolute; inset: 0; height: 100%; aspect-ratio: auto; }
   }
   @media (min-width: 90em) {
     .how { grid-template-rows: auto 1fr; }
