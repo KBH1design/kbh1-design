@@ -125,6 +125,9 @@
     .card:first-child::before { display: none; }
   }
 
+  /* EXPERIMENT: "Find out more" under the Identity for Education card */
+  .card__more { align-self: flex-start; }
+
   /* =============================== BRANDS =============================== */
   .brands { padding-block-end: var(--space-stack-loose); overflow: hidden; }
   .brands__logos { display: flex; justify-content: center; }
